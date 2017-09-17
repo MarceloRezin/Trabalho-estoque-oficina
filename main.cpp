@@ -1,3 +1,11 @@
+/*Este arquivo contém o main, sendo responsável pela interação do usuário com o software e pelo gerenciamento das funções a serem executadas.
+ *
+ * Autores: Marcelo Rezin e Marcelo Bristot
+ * Data de criação: 16 de set de 2017
+ *
+ * Última alteração: 17 de set de 2017
+ */
+
 #include <cstdlib>
 #include <iostream>
 #include "gerencia_arquivos.h"
@@ -89,7 +97,6 @@ void iniciar(){
               break;
 
            case 6:
-
         	   nome = "pecaAutomotiva";
 
         	   cout << "Gerando ..." << endl;

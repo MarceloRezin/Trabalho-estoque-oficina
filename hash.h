@@ -2,7 +2,9 @@
  * 
  *
  * Autores: Marcelo Rezin e Marcelo Bristot
- * Data: 4 de set de 2017
+ * Data de criação: 4 de set de 2017
+ *
+ * Última alteração: 17 de set de 2017
  */
 
 #include <cstdlib>
