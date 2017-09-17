@@ -27,6 +27,7 @@ class hash{
 		void consulta(int cod);
 		void consultanome(string nome);
 		void imprimirhash();
+		list<peca> getsublist(int classe);
 };
 
 hash::hash(){}
@@ -61,6 +62,8 @@ void hash::remove(int cod){
 
 	if(encontrado == false){
 		cout << "Nao foi encontrado!" << endl;
+	}else{
+		cout << "Produto removido!" << endl;
 	}
 }
 
@@ -87,7 +90,7 @@ void hash::consultanome(string nome){
 	bool encontrado = false;
 
 	for(int i=0; i<TAM; i++){
-		list<peca> sublist = listapecas[i];
+		list<peca> sublist = getsublist(i);
 
 		for(it=sublist.begin(); it!=sublist.end(); it++){
 			if(it->getnome() == nome){
@@ -107,7 +110,7 @@ void hash::imprimirhash(){
 	bool encontrado = false;
 
 	cout << "\n";
-	for(int i=0; i<5; i++){
+	for(int i=0; i<TAM; i++){
 		list<peca> sublist = listapecas[i];
 
 		for(it=sublist.begin(); it!=sublist.end(); it++){
@@ -120,5 +123,9 @@ void hash::imprimirhash(){
 	if(encontrado == false){
 		cout << "A lista esta vazia!" << endl;
 	}
+}
+
+list<peca> hash::getsublist(int classe){
+	return listapecas[gerahash(classe)];
 }
 

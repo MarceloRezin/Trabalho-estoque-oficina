@@ -6,31 +6,89 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <fstream>
+#include "hash.h"
 
 using namespace std;
 
-#define CLASSE_0 "dados_0.txt"
-#define CLASSE_1 "dados_1.txt"
-#define CLASSE_2 "dados_2.txt"
-#define CLASSE_3 "dados_3.txt"
-#define CLASSE_4 "dados_4.txt"
-#define CLASSE_5 "dados_5.txt"
-#define CLASSE_6 "dados_6.txt"
-#define CLASSE_7 "dados_7.txt"
-#define CLASSE_8 "dados_8.txt"
-#define CLASSE_9 "dados_9.txt"
+const string classes[10] = {"dados_0.txt", "dados_1.txt", "dados_2.txt", "dados_3.txt", "dados_4.txt", "dados_5.txt", "dados_6.txt",
+					  "dados_7.txt", "dados_8.txt", "dados_9.txt"};
 
 class gerencia_arquivos{
 	private:
-		string classe();
+		list<peca>::iterator it;
 
 	public:
-		void gravarestoque(int classe);
-		void carregaestoque();
+		string getclasse(int classe);
+		void gravarestoque(list<peca> sublist, int classe);
+		void carregaestoque(hash *hashestoque);
 		void verificaaquivo();
 };
 
+string gerencia_arquivos::getclasse(int classe){
+	return classes[classe];
+}
 
-void gerencia_arquivos::gravarestoque(int classe){
+void gerencia_arquivos::gravarestoque(list<peca> sublist, int classe){
 
+	string endereco = getclasse(classe);
+
+	fstream estoque;
+
+	if(!sublist.empty()){
+
+		estoque.open(endereco.c_str(), ios::trunc | ios::out);
+
+		for(it=sublist.begin(); it!=sublist.end(); it++){
+			estoque << it->getcodigo() << "\t" << it->getnome() << "\t" << it->getpreco() << "\n";
+
+		}
+	}else{
+		remove(endereco.c_str());
+		estoque.open(endereco.c_str());
+	}
+
+	estoque.close();
+}
+
+void gerencia_arquivos::carregaestoque(hash *hashestoque){
+	for(int i=0; i<10; i++){
+
+		fstream estoque(classes[i].c_str(), ios::in);
+
+		while(!estoque.eof()){
+
+			int codigo;
+			string nome;
+			float preco;
+
+			peca p;
+
+			estoque >> codigo >> nome >> preco;
+
+			p.setcodigo(codigo);
+			p.setnome(nome);
+			p.setpreco(preco);
+
+			if(nome !=""){//evita a leitura de lixo
+				hashestoque->insere(p);
+			}
+
+		}
+
+		estoque.close();
+	}
+}
+
+void gerencia_arquivos::verificaaquivo(){
+	ofstream estoque;
+
+	for(int i=0; i<10; i++){
+		estoque.open(getclasse(i).c_str(), ios_base::in);
+
+		if(!estoque){
+			estoque.open(getclasse(i).c_str());
+		}
+		estoque.close();
+	}
 }
