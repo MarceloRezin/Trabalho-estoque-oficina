@@ -97,12 +97,11 @@ void iniciar(){
               break;
 
            case 6:
-        	   nome = "pecaAutomotiva";
+        	   p.setnome("pecaAutomotiva");
 
         	   cout << "Gerando ..." << endl;
         	   for(int i=1; i<10001; i++){
         			p.setcodigo(i);
-        		    p.setnome(nome);
         		    p.setpreco(i*5);
 
         		    hashestoque->insere(p);
